@@ -83,3 +83,11 @@ SELECT
 FROM student_courses
 WHERE student_id = 2;
 
+DELIMITER $$
+CREATE PROCEDURE enrol_student(IN input_student_id INT, input_course_id INT)
+BEGIN
+	INSERT INTO enrolment (student_id, course_id, enrolment_date)
+    VALUES (input_student_id, input_course_id, CURDATE());
+END $$
+DELIMITER ;
+    
