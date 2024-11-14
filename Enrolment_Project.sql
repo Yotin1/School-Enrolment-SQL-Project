@@ -13,8 +13,6 @@ CREATE TABLE student(
     date_of_birth DATE NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE
 );
-SELECT * FROM student;
-DESC student;
 
 -- Create course table
 CREATE TABLE course(
@@ -23,8 +21,6 @@ CREATE TABLE course(
     course_description VARCHAR(500) NOT NULL,
     credits INT NOT NULL
 );
-SELECT * FROM course;
-DESC course;
 
 -- Create enrolment table
 CREATE TABLE enrolment(
@@ -42,10 +38,27 @@ CREATE TABLE enrolment(
 		FOREIGN KEY (course_id)
         REFERENCES course(course_id)
 );
+
+-- Shows list of tables 
+SHOW TABLES;
+-- Shows lists of all the students, courses and enrolments
+SELECT * FROM student;
+SELECT * FROM course;
 SELECT * FROM enrolment;
+-- Shows the structure of each table
+DESC student;
+DESC course;
 DESC enrolment;
 
-SHOW TABLES;
+-- Stored procedure to update a student's grade for a particular course
+DELIMITER $$
+CREATE PROCEDURE update_grade(IN input_course_id INT, input_student_id INT, input_grade INT)
+BEGIN
+	UPDATE enrolment
+    SET grade = input_grade
+    WHERE course_id = input_course_id AND student_id = input_student_id;
+END $$
+DELIMITER ;
 
-
+CALL update_grade(5, 2, 85);
 
