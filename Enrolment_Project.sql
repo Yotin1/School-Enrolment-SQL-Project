@@ -63,6 +63,7 @@ SELECT
 	student.student_id,
 	enrolment.course_id,
     course.course_name,
+    course.credits,
 	enrolment.grade
 FROM enrolment
 INNER JOIN
@@ -74,9 +75,23 @@ course ON enrolment.course_id = course.course_id;
 SELECT
 	course_id AS 'Course ID',
     course_name AS 'Course Name',
-    grade AS 'Grade'
+    grade AS 'Mark',
+    (CASE
+		WHEN grade >= 80 THEN 'A'
+        WHEN grade >= 70 THEN 'B'
+        WHEN grade >= 60 THEN 'C'
+        WHEN grade >= 50 THEN 'D'
+        WHEN grade >= 40 THEN 'E'
+        ELSE 'U'
+	END
+    ) AS 'Grade',
+    (CASE
+		WHEN grade >= 40 THEN credits
+        ELSE 0
+        END
+	) AS 'Credits'
 FROM student_courses
-WHERE student_id = 21;
+WHERE student_id = 2;
 
 -- Creates a view that displays all of the students enrolled on a particular course
 CREATE OR REPLACE VIEW course_register AS
@@ -95,8 +110,7 @@ course ON enrolment.course_id = course.course_id;
 -- Displays the course register
 SELECT
 	student_id AS 'Student ID',
-    first_name,
-    last_name
+    CONCAT(first_name, ' ', last_name) AS 'Student Name'
 FROM course_register
 WHERE course_id = 2;
 
