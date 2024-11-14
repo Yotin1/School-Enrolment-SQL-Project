@@ -5,6 +5,7 @@ SHOW DATABASES;
 USE schooldb;
 SELECT DATABASE();
 
+-- Create student table
 CREATE TABLE student(
 	student_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
@@ -14,6 +15,8 @@ CREATE TABLE student(
 );
 SELECT * FROM student;
 DESC student;
+
+-- Create course table
 CREATE TABLE course(
 	course_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     course_name VARCHAR(50) NOT NULL,
@@ -22,6 +25,8 @@ CREATE TABLE course(
 );
 SELECT * FROM course;
 DESC course;
+
+-- Create enrolment table
 CREATE TABLE enrolment(
 	enrolment_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     student_id INT,
@@ -39,3 +44,8 @@ CREATE TABLE enrolment(
 );
 SELECT * FROM enrolment;
 DESC enrolment;
+
+SHOW TABLES;
+
+
+
