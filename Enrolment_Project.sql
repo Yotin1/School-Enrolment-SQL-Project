@@ -62,3 +62,24 @@ DELIMITER ;
 
 CALL update_grade(5, 2, 85);
 
+-- Creates a view that displays a student's enrolled courses and grades
+CREATE OR REPLACE VIEW student_courses AS
+SELECT 
+	student.student_id,
+	enrolment.course_id,
+    course.course_name,
+	enrolment.grade
+FROM enrolment
+INNER JOIN
+student ON enrolment.student_id = student.student_id
+INNER JOIN
+course ON enrolment.course_id = course.course_id;
+
+-- Displays the student detail view
+SELECT
+	course_id AS 'Course ID',
+    course_name AS 'Course Name',
+    grade AS 'Grade'
+FROM student_courses
+WHERE student_id = 2;
+
