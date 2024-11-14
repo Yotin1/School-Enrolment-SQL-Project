@@ -8,17 +8,17 @@ SELECT DATABASE();
 -- Create student table
 CREATE TABLE student(
 	student_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
+    first_name TINYTEXT NOT NULL,
+    last_name TINYTEXT NOT NULL,
     date_of_birth DATE NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE
+    email VARCHAR(255) NOT NULL UNIQUE
 );
 
 -- Create course table
 CREATE TABLE course(
 	course_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    course_name VARCHAR(50) NOT NULL,
-    course_description VARCHAR(500) NOT NULL,
+    course_name TINYTEXT NOT NULL,
+    course_description TEXT NOT NULL,
     credits INT NOT NULL
 );
 
@@ -50,17 +50,12 @@ DESC student;
 DESC course;
 DESC enrolment;
 
--- Stored procedure to update a student's grade for a particular course
-DELIMITER $$
-CREATE PROCEDURE update_grade(IN input_course_id INT, input_student_id INT, input_grade INT)
-BEGIN
-	UPDATE enrolment
-    SET grade = input_grade
-    WHERE course_id = input_course_id AND student_id = input_student_id;
-END $$
-DELIMITER ;
+-- Update a student's grade for a particular course
+UPDATE enrolment
+SET grade = 75
+WHERE course_id = 4 AND student_id = 2;
 
-CALL update_grade(5, 2, 85);
+DROP PROCEDURE IF EXISTS update_grade;
 
 -- Creates a view that displays a student's enrolled courses and grades
 CREATE OR REPLACE VIEW student_courses AS
@@ -81,13 +76,47 @@ SELECT
     course_name AS 'Course Name',
     grade AS 'Grade'
 FROM student_courses
-WHERE student_id = 2;
+WHERE student_id = 21;
 
+-- Creates a view that displays all of the students enrolled on a particular course
+CREATE OR REPLACE VIEW course_register AS
+SELECT 
+	student.student_id,
+    student.first_name,
+    student.last_name,
+	enrolment.course_id,
+	enrolment.grade
+FROM enrolment
+INNER JOIN
+student ON enrolment.student_id = student.student_id
+INNER JOIN
+course ON enrolment.course_id = course.course_id;
+
+-- Displays the course register
+SELECT
+	student_id AS 'Student ID',
+    first_name,
+    last_name
+FROM course_register
+WHERE course_id = 2;
+
+-- Procedure to enrol a student
+DROP PROCEDURE IF EXISTS enrol_student;
 DELIMITER $$
-CREATE PROCEDURE enrol_student(IN input_student_id INT, input_course_id INT)
+CREATE PROCEDURE enrol_student(IN student_id INT, course_id INT)
 BEGIN
 	INSERT INTO enrolment (student_id, course_id, enrolment_date)
-    VALUES (input_student_id, input_course_id, CURDATE());
+	SELECT student_id, course_id, CURDATE() FROM DUAL
+    WHERE NOT EXISTS (
+		SELECT 1 FROM student_courses AS s
+        WHERE s.student_id = student_id AND s.course_id = course_id
+    );
 END $$
 DELIMITER ;
+
+-- Insert new student record
+INSERT INTO student (first_name, last_name, date_of_birth, email) VALUES
+('Umar', 'Reed', '2000-09-30', 'umar.reed@hotmail.com');
+
+CALL enrol_student(21, 2);
     
