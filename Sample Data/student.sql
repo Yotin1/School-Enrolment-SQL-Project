@@ -1,5 +1,5 @@
-INSERT INTO student (first_name, last_name, date_of_birth, email)
-VALUES
+-- Inserts sample data into the student table
+INSERT INTO student (first_name, last_name, date_of_birth, email) VALUES
 ('John', 'Doe', '2003-01-15', 'john.doe@yahoo.com'),
 ('Jane', 'Smith', '2002-05-23', 'jane.smith@gmail.com'),
 ('Alice', 'Johnson', '2001-07-30', 'alice.johnson@hotmail.com'),
