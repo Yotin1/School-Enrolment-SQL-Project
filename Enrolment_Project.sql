@@ -63,8 +63,22 @@ SELECT
 	student.student_id,
 	enrolment.course_id,
     course.course_name,
-    course.credits,
-	enrolment.grade
+    -- Displays grade letter based on numerical grade
+    (CASE
+		WHEN enrolment.grade >= 80 THEN CONCAT(enrolment.grade, ' (A)')
+        WHEN enrolment.grade >= 70 THEN CONCAT(enrolment.grade, ' (B)')
+        WHEN enrolment.grade >= 60 THEN CONCAT(enrolment.grade, ' (C)')
+        WHEN enrolment.grade >= 50 THEN CONCAT(enrolment.grade, ' (D)')
+        WHEN enrolment.grade >= 40 THEN CONCAT(enrolment.grade, ' (E)')
+        ELSE CONCAT(enrolment.grade, ' (U)')
+	END
+    ) AS `Grade`,
+    -- Credits only count if student passes
+    (CASE
+		WHEN enrolment.grade >= 40 THEN credits
+        ELSE 0
+	END
+	) AS `Credits`
 FROM enrolment
 INNER JOIN
 student ON enrolment.student_id = student.student_id
@@ -73,24 +87,14 @@ course ON enrolment.course_id = course.course_id;
 
 -- Displays the student detail view
 SELECT
-	course_id AS 'Course ID',
-    course_name AS 'Course Name',
-    (CASE
-		WHEN grade >= 80 THEN CONCAT(grade, ' (A)')
-        WHEN grade >= 70 THEN CONCAT(grade, ' (B)')
-        WHEN grade >= 60 THEN CONCAT(grade, ' (C)')
-        WHEN grade >= 50 THEN CONCAT(grade, ' (D)')
-        WHEN grade >= 40 THEN CONCAT(grade, ' (E)')
-        ELSE CONCAT(grade, ' (U)')
-	END
-    ) AS 'Grade',
-    (CASE
-		WHEN grade >= 40 THEN credits
-        ELSE 0
-        END
-	) AS 'Credits'
+	IF(course_id IS NULL, 'Total Credits', course_id) AS `Course ID`,
+    IF(course_id IS NULL, '', ANY_VALUE(course_name)) AS `Course Name`,
+    IF(course_id IS NULL, '', ANY_VALUE(`Grade`)) AS `Grade`,
+    SUM(`Credits`) AS `Credits`
 FROM student_courses
-WHERE student_id = 21;
+WHERE student_id = 1
+-- Shows total credits earned
+GROUP BY course_id WITH ROLLUP;
 
 -- Creates a view that displays all of the students enrolled on a particular course
 CREATE OR REPLACE VIEW course_register AS
