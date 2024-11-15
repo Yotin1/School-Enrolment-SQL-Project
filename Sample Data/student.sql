@@ -20,3 +20,4 @@ INSERT INTO student (first_name, last_name, date_of_birth, email) VALUES
 ('Paul', 'Perez', '2000-10-11', 'paul.perez@hotmail.com'),
 ('Quinn', 'Roberts', '2003-06-13', 'quinn.roberts@yahoo.com'),
 ('Rachel', 'Clark', '2002-04-19', 'rachel.clark@gmail.com');
+SELECT * FROM student

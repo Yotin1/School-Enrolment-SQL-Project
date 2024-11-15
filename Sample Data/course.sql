@@ -10,3 +10,4 @@ INSERT INTO course (course_name, course_description, credits) VALUES
 ('Relativity', 'An exploration of Einstein\'s theory of relativity, focusing on special and general relativity concepts.', 15),
 ('Solid State Physics', 'Studies the properties of solid materials, focusing on crystal structure, band theory, and conductivity.', 15),
 ('Astrophysics', 'Examines celestial phenomena, stellar evolution, and the fundamental principles of the universe.', 15);
+SELECT * FROM course;
