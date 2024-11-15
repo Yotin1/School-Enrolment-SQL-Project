@@ -75,14 +75,13 @@ course ON enrolment.course_id = course.course_id;
 SELECT
 	course_id AS 'Course ID',
     course_name AS 'Course Name',
-    grade AS 'Mark',
     (CASE
-		WHEN grade >= 80 THEN 'A'
-        WHEN grade >= 70 THEN 'B'
-        WHEN grade >= 60 THEN 'C'
-        WHEN grade >= 50 THEN 'D'
-        WHEN grade >= 40 THEN 'E'
-        ELSE 'U'
+		WHEN grade >= 80 THEN CONCAT(grade, ' (A)')
+        WHEN grade >= 70 THEN CONCAT(grade, ' (B)')
+        WHEN grade >= 60 THEN CONCAT(grade, ' (C)')
+        WHEN grade >= 50 THEN CONCAT(grade, ' (D)')
+        WHEN grade >= 40 THEN CONCAT(grade, ' (E)')
+        ELSE CONCAT(grade, ' (U)')
 	END
     ) AS 'Grade',
     (CASE
@@ -91,7 +90,7 @@ SELECT
         END
 	) AS 'Credits'
 FROM student_courses
-WHERE student_id = 1;
+WHERE student_id = 21;
 
 -- Creates a view that displays all of the students enrolled on a particular course
 CREATE OR REPLACE VIEW course_register AS
@@ -110,9 +109,10 @@ course ON enrolment.course_id = course.course_id;
 -- Displays the course register
 SELECT
 	student_id AS 'Student ID',
-    CONCAT(first_name, ' ', last_name) AS 'Student Name'
+    CONCAT(first_name, ' ', last_name) AS 'Student Name',
+    grade AS 'Grade'
 FROM course_register
-WHERE course_id = 2;
+WHERE course_id = 1;
 
 -- Procedure to enrol a student
 DROP PROCEDURE IF EXISTS enrol_student;
@@ -132,5 +132,6 @@ DELIMITER ;
 INSERT INTO student (first_name, last_name, date_of_birth, email) VALUES
 ('Umar', 'Reed', '2000-09-30', 'umar.reed@hotmail.com');
 
-CALL enrol_student(21, 2);
+-- Executes the enrol_student proecdure
+CALL enrol_student(21, 1);
     
