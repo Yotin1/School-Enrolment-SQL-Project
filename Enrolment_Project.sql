@@ -91,7 +91,7 @@ SELECT
         END
 	) AS 'Credits'
 FROM student_courses
-WHERE student_id = 2;
+WHERE student_id = 1;
 
 -- Creates a view that displays all of the students enrolled on a particular course
 CREATE OR REPLACE VIEW course_register AS

@@ -1,6 +1,6 @@
 # School Enrolment Database
 
-This database can be used to enrol students onto different courses.\
+This database can be used to store data about students and the courses they are enrolled onto.\
 There are three tables in the database:
 
 A table for storing students' details - first name, last name, date of birth and email\
@@ -35,7 +35,43 @@ Enrolment Data\
 
 ## Updating Grades
 
-When a student is enrolled on a course, they won't have a grade yet (which is why `enrolment.grade` can be null). To add/update a student's grade for a particular course, this expression can be used:\
+When a student is enrolled on a course, they will usually not have a grade yet (which is why `enrolment.grade` can be null). To add/update a student's grade for a particular course, this expression can be used:\
 ![Updated Grade](Screenshots/update_grade.png)
 
 ## Views
+
+### Student Course List
+
+If you wanted to see which courses a particular student is enrolled on, you can use the `student_courses` view along with the `SELECT` statement below.
+
+![Student Courses View](Screenshots/student_courses.png)
+
+![Student Courses Select Statement](Screenshots/student_courses_select.png)
+
+The view can show the course ID, course Name, grade and credits earned for a particular student. The letter grade shown is chosen using a `CASE` statement based on the numerical grade stored in `enrolment` and the credits earned is either 0 if the student has a "U" or the value stored in `course` for that particular course.
+
+### Register
+
+If you wanted to see which students are enrolled on a particular course, you can use the `course_register` view along with the `SELECT` statement below.
+
+![Course Register View](Screenshots/course_register.png)
+
+![Course Register Select Statement](Screenshots/course_register_select.png)
+
+The view can show the student ID and full name as well as the grade of each student enrolled on a particular course.
+
+## Enrolling Students
+
+If you wanted to enrol a student onto a course - for example, lets say there was a new student
+
+![New Student Added to the School](Screenshots/new_student.png)\
+![New Student Has No Courses](Screenshots/new_student_courses1.png)
+
+you can use the stored procedure `enrol_student`, which takes the student's ID and the course ID to insert a record into `enrolment`. The procedure will also insert the current date into the record as the date enrolled.
+
+![Enrol Student Procedure](Screenshots/enrol_student.png)
+
+The procedure will only enrol a student onto a course if they are not already enrolled onto it using the `WHERE NOT EXISTS` clause.
+
+![New Enrolment Added](Screenshots/new_enrolment.png)\
+![New Student Enrolled on Course](Screenshots/new_student_courses2.png)
