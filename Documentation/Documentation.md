@@ -48,7 +48,7 @@ If you wanted to see which courses a particular student is enrolled on, you can 
 
 ![Student Courses Select Statement](Screenshots/student_courses_select.png)
 
-The view can show the course ID, course Name, grade and credits earned for a particular student, as well as the total amount of credits earned. The letter grade shown is chosen using a `CASE` statement based on the numerical grade stored in `enrolment` and the credits earned is either 0 if the student has a "U" or the value stored in `course` for that particular course.
+The view can show the course ID, course name, grade and credits earned in that course for a particular student, as well as the total amount of credits earned. The letter grade shown is chosen using a `CASE` statement based on the numerical grade stored in `enrolment` and the credits earned is either 0 if the student has a "U" or the value stored in `course` for that particular course.
 
 ### Register
 
