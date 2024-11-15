@@ -52,8 +52,8 @@ DESC enrolment;
 
 -- Update a student's grade for a particular course
 UPDATE enrolment
-SET grade = 75
-WHERE course_id = 4 AND student_id = 2;
+SET grade = 80
+WHERE course_id = 3 AND student_id = 1;
 
 DROP PROCEDURE IF EXISTS update_grade;
 
