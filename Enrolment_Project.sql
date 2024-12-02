@@ -92,7 +92,7 @@ SELECT
     IF(course_id IS NULL, '', ANY_VALUE(`Grade`)) AS `Grade`,
     SUM(`Credits`) AS `Credits`
 FROM student_courses
-WHERE student_id = 1
+WHERE student_id = 2
 -- Shows total credits earned
 GROUP BY course_id WITH ROLLUP;
 
@@ -137,5 +137,5 @@ INSERT INTO student (first_name, last_name, date_of_birth, email) VALUES
 ('Umar', 'Reed', '2000-09-30', 'umar.reed@hotmail.com');
 
 -- Executes the enrol_student proecdure
-CALL enrol_student(21, 1);
+CALL enrol_student(2, 3);
     
