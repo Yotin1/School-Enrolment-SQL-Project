@@ -1,4 +1,5 @@
 -- Inserts sample data into the student table
+TRUNCATE TABLE student;
 INSERT INTO student (first_name, last_name, date_of_birth, email) VALUES
 ('John', 'Doe', '2003-01-15', 'john.doe@yahoo.com'),
 ('Jane', 'Smith', '2002-05-23', 'jane.smith@gmail.com'),
@@ -20,4 +21,7 @@ INSERT INTO student (first_name, last_name, date_of_birth, email) VALUES
 ('Paul', 'Perez', '2000-10-11', 'paul.perez@hotmail.com'),
 ('Quinn', 'Roberts', '2003-06-13', 'quinn.roberts@yahoo.com'),
 ('Rachel', 'Clark', '2002-04-19', 'rachel.clark@gmail.com');
-SELECT * FROM student
+SELECT * FROM student;
+
+-- Deletes record from student table
+DELETE FROM student WHERE student_id = 20;

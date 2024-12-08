@@ -82,3 +82,5 @@ INSERT INTO enrolment (student_id, course_id, enrolment_date, grade) VALUES
 (20, 7, '2023-02-27', 84),
 (20, 9, '2023-03-10', 93);
 SELECT * FROM enrolment;
+
+DELETE FROM enrolment WHERE enrolment_id = 80;

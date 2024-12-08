@@ -1,4 +1,5 @@
 -- Inserts sample data into the course table
+TRUNCATE TABLE course;
 INSERT INTO course (course_name, course_description, credits) VALUES
 ('Classical Mechanics', 'An in-depth study of Newtonian mechanics, focusing on forces, motion, and energy.', 15),
 ('Electromagnetism', 'Covers electric and magnetic fields, circuits, Maxwell\'s equations, and electromagnetic waves.', 15),
@@ -11,3 +12,6 @@ INSERT INTO course (course_name, course_description, credits) VALUES
 ('Solid State Physics', 'Studies the properties of solid materials, focusing on crystal structure, band theory, and conductivity.', 15),
 ('Astrophysics', 'Examines celestial phenomena, stellar evolution, and the fundamental principles of the universe.', 15);
 SELECT * FROM course;
+
+-- Deletes record from course table
+DELETE FROM course WHERE course_id = 10

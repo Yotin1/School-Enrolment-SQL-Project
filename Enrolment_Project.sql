@@ -5,6 +5,7 @@ SHOW DATABASES;
 USE schooldb;
 SELECT DATABASE();
 
+DROP TABLE IF EXISTS student;
 -- Create student table
 CREATE TABLE student(
 	student_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -14,6 +15,7 @@ CREATE TABLE student(
     email VARCHAR(255) NOT NULL UNIQUE
 );
 
+DROP TABLE IF EXISTS course;
 -- Create course table
 CREATE TABLE course(
 	course_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -22,6 +24,7 @@ CREATE TABLE course(
     credits INT NOT NULL
 );
 
+DROP TABLE IF EXISTS enrolment;
 -- Create enrolment table
 CREATE TABLE enrolment(
 	enrolment_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -32,11 +35,13 @@ CREATE TABLE enrolment(
     
     CONSTRAINT student_id
 		FOREIGN KEY (student_id)
-        REFERENCES student(student_id),
+        REFERENCES student(student_id)
+        ON DELETE CASCADE,
 	
     CONSTRAINT course_id
 		FOREIGN KEY (course_id)
         REFERENCES course(course_id)
+        ON DELETE CASCADE
 );
 
 -- Shows list of tables 
@@ -121,10 +126,10 @@ WHERE course_id = 1;
 -- Procedure to enrol a student
 DROP PROCEDURE IF EXISTS enrol_student;
 DELIMITER $$
-CREATE PROCEDURE enrol_student(IN student_id INT, course_id INT)
+CREATE PROCEDURE enrol_student(IN student_id INT, course_id INT, enrolment_date DATE)
 BEGIN
 	INSERT INTO enrolment (student_id, course_id, enrolment_date)
-	SELECT student_id, course_id, CURDATE() FROM DUAL
+	SELECT student_id, course_id, enrolment_date FROM DUAL
     WHERE NOT EXISTS (
 		SELECT 1 FROM student_courses AS s
         WHERE s.student_id = student_id AND s.course_id = course_id
@@ -137,5 +142,5 @@ INSERT INTO student (first_name, last_name, date_of_birth, email) VALUES
 ('Umar', 'Reed', '2000-09-30', 'umar.reed@hotmail.com');
 
 -- Executes the enrol_student proecdure
-CALL enrol_student(2, 3);
+CALL enrol_student(2, 5, "2024-12-08");
     
