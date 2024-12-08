@@ -67,7 +67,7 @@ If you wanted to enrol a student onto a course - for example, lets say there was
 ![New Student Added to the School](Screenshots/new_student.png)\
 ![New Student Has No Courses](Screenshots/new_student_courses1.png)
 
-you can use the stored procedure `enrol_student`, which takes the student's ID and the course ID to insert a record into `enrolment`. The procedure will also insert the current date into the record as the date enrolled.
+you can use the stored procedure `enrol_student`, which takes the student's ID, course ID and a date to insert a record into `enrolment`.
 
 ![Enrol Student Procedure](Screenshots/enrol_student.png)
 
